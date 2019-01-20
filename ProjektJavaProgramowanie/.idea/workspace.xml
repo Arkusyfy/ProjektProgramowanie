@@ -6,12 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f47a03f-2e38-44df-8275-616c4db46dc4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/firma.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/firma.java" afterDir="false" />
-    </list>
+    <list default="true" id="6f47a03f-2e38-44df-8275-616c4db46dc4" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -206,12 +201,12 @@
       <workItem from="1547942832624" duration="217000" />
       <workItem from="1547946550577" duration="10000" />
       <workItem from="1547980815669" duration="8709000" />
-      <workItem from="1548000975675" duration="1734000" />
+      <workItem from="1548000975675" duration="1925000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44853000" />
+    <option name="totallyTimeSpent" value="45044000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -224,7 +219,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="840" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12875536" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -235,10 +229,10 @@
       <window_info id="Image Layers" order="6" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4994664" visible="true" weight="0.30347595" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4985694" weight="0.30347595" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.40520042" />
       <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.4994664" weight="0.20801733" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50053364" side_tool="true" weight="0.3286334" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50143063" side_tool="true" weight="0.30347595" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="8" />
@@ -279,6 +273,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/company/firma.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="183" column="24" selection-start-line="183" selection-start-column="19" selection-end-line="183" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/pojazd.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -286,16 +290,6 @@
           <folding>
             <element signature="e#1475#1476#0" expanded="true" />
             <element signature="e#1517#1518#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/company/firma.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="183" column="24" selection-start-line="183" selection-start-column="19" selection-end-line="183" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
