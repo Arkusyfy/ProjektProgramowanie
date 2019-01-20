@@ -128,10 +128,10 @@ public class Main {
         }
     }
 
-    private static boolean importKierowcow()
+    private static boolean importKierowcow(firma mainFirma)
     throws Exception{
-        File toImport = new File("./import");
-        File imported = new File("./imported");
+        final File toImport = new File("./import");
+        final File imported = new File("./imported");
 
         importFolders(toImport, imported);
 
@@ -146,10 +146,19 @@ public class Main {
             FileReader f = new FileReader(i.getPath());
             BufferedReader reader = new BufferedReader(f);
             String line;
+            int counter=0;
             while((line = reader.readLine())!=null){
-                if(line.matches(".+;.+")){
-
-                };
+                counter++;
+                if(line.contains(";")){
+                    ArrayList<String> lineSplit = new ArrayList<String>(Arrays.asList(line.split(";")));
+                    if(lineSplit.size()==2){
+                        if(mainFirma.dodajKierowce(lineSplit.get(0), lineSplit.get(1))){
+                            System.out.println("Poyślnie dodano kierowce: "+lineSplit.get(0)+" "+lineSplit.get(1));
+                        }
+                        continue;
+                    }
+                }
+                System.out.println("Błąd w linijce nr "+counter+": "+line);
             }
 
         }
@@ -202,22 +211,26 @@ public class Main {
                     break;
                 }
                 case "1": {
+                    cls();
                     System.out.println("Ilość zatrudnionych kierowców: " + mainFirma.ileKierowcow());
                     sc.nextLine();
                     break;
                 }
                 case "2": {
+                    cls();
                     System.out.println("Ilość pojazdów we flocie formy: " + mainFirma.ilePojazdow());
                     sc.nextLine();
                     break;
                 }
                 case "3": {
+                    cls();
                     System.out.println("Lista kierowców:\n");
                     System.out.println(mainFirma.listaKierowcow());
                     sc.nextLine();
                     break;
                 }
                 case "4": {
+                    cls();
                     System.out.println("Czy wyświetlić również listę przypisanych do danego pojazdu kierowców?\n1 - TAK\n0 - NIE\n");
                     String tempScan = sc.nextLine();
                     while (!tempScan.equals("1") && !tempScan.equals("0")) {
@@ -230,6 +243,7 @@ public class Main {
                     break;
                 }
                 case "5": {
+                    cls();
                     String tempImie, tempNazwisko;
                     System.out.println("Podaj imię kierowcy");
                     tempImie = sc.nextLine();
@@ -243,6 +257,7 @@ public class Main {
                     break;
                 }
                 case "6": {
+                    cls();
                     String tempNazwa;
                     System.out.println("Podaj nazwe pojazdu");
                     tempNazwa = sc.nextLine();
@@ -258,6 +273,7 @@ public class Main {
                     break;
                 }
                 case "7": {
+                    cls();
                     System.out.println(mainFirma.listaKierowcow() + "\n");
                     System.out.println("Podaj id kierowcy, którego chcesz edytować");
                     int id = getInt();
@@ -275,6 +291,7 @@ public class Main {
                     break;
                 }
                 case "8": {
+                    cls();
                     System.out.println(mainFirma.listaPojazdow(false) + "\n");
                     System.out.println("Podaj id pojazdu, który chcesz edytować");
                     int id = getInt();
@@ -294,6 +311,7 @@ public class Main {
                     break;
                 }
                 case "9": {
+                    cls();
                     System.out.println(mainFirma.listaKierowcow());
                     System.out.println("Podaj id kierowcy któego chcesz przypisać");
                     int kieroID = getInt();
@@ -309,6 +327,7 @@ public class Main {
                     break;
                 }
                 case "10":{
+                    cls();
                     System.out.println(mainFirma.listaPojazdow(false));
                     System.out.println("Podaj id pojazdu, który wyjechał");
                     int id = getInt();
@@ -320,6 +339,7 @@ public class Main {
                     break;
                 }
                 case "11":{
+                    cls();
                     System.out.println(mainFirma.listaPojazdow(false));
                     System.out.println("Podaj id pojazdu, który przyjechał");
                     int id = getInt();
@@ -331,6 +351,7 @@ public class Main {
                     break;
                 }
                 case "12":{
+                    cls();
                     System.out.println("Podaj dane kierowcy, któego chcesz wyszukać");
                     String kierowcaMatch = sc.nextLine();
                     System.out.println(mainFirma.wyszukajKierowce(kierowcaMatch));
@@ -338,17 +359,19 @@ public class Main {
                     break;
                 }
                 case "13":{
+                    cls();
                     System.out.println("Podaj ładowność");
                     double ladownosc = getDouble();
                     System.out.println("Podaj pojemność");
                     double pojemnosc = getDouble();
 
-                    System.out.println(mainFirma.wyszukajPojazd(ladownosc, pojemnosc));
+                    System.out.println('\n'+mainFirma.wyszukajPojazd(ladownosc, pojemnosc));
 
                     sc.nextLine();
                     break;
                 }
                 case "14":{
+                    cls();
                     String get = mainFirma.listWTrasie();
                     if(get.equals(""))
                         System.out.println("Brak pojazdów w trasie");
@@ -359,6 +382,7 @@ public class Main {
                     break;
                 }
                 case "15":{
+                    cls();
                     String get = mainFirma.sortujPojazdyWgKursow();
                     if(get.equals(""))
                         System.out.println("Brak pojazdów");
@@ -369,6 +393,7 @@ public class Main {
                     break;
                 }
                 case "16":{
+                    cls();
                     System.out.println("Umieść plik z kierowcami w folderze \"import\", stworzonym w katalogu, w którym wywołany został program" +
                                     "\nFormat pliku wygląda następująco:\n\n" +
                             "imię1;nazwisko1\n" +
@@ -378,7 +403,7 @@ public class Main {
                     importFolders(new File("./import"),new File("./imported"));
                     sc.nextLine();
                     System.out.println("Rozpoczynam import...");
-                    importKierowcow();
+                    importKierowcow(mainFirma);
 
 
                     sc.nextLine();

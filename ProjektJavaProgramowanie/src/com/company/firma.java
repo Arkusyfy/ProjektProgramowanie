@@ -53,7 +53,7 @@ public class firma implements java.io.Serializable {
             System.out.println("Brak pojazdów");
 
         for (pojazd i :matchedPojazdy){
-            out.append(i.getIdentyfikator()+": "+i.getNazwa()+"\nLadowność: "+i.getLadownosc()+"\nPojemność: "+i.getPojemnosc()+'\n');
+            out.append(i.getIdentyfikator()+": "+i.getNazwa()+"\nLadowność: "+i.getLadownosc()+"\nPojemność: "+i.getPojemnosc()+"\n\n");
         }
 
         return out.toString();
