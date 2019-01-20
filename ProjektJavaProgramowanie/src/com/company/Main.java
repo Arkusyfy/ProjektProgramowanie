@@ -1,8 +1,12 @@
 package com.company;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -128,7 +132,7 @@ public class Main {
         }
     }
 
-    private static boolean importKierowcow(firma mainFirma)
+    private static boolean importKierowcow(firma mainFirma, RandomAccessFile baza)
     throws Exception{
         final File toImport = new File("./import");
         final File imported = new File("./imported");
@@ -143,6 +147,7 @@ public class Main {
         }
         ArrayList<kierowca> importedKierowcy = new ArrayList<kierowca>();
         for (File i:files) {
+            boolean isImported=false;
             FileReader f = new FileReader(i.getPath());
             BufferedReader reader = new BufferedReader(f);
             String line;
@@ -154,15 +159,23 @@ public class Main {
                     if(lineSplit.size()==2){
                         if(mainFirma.dodajKierowce(lineSplit.get(0), lineSplit.get(1))){
                             System.out.println("Poyślnie dodano kierowce: "+lineSplit.get(0)+" "+lineSplit.get(1));
+                            isImported=true;
                         }
                         continue;
                     }
                 }
                 System.out.println("Błąd w linijce nr "+counter+": "+line);
             }
-
+            if(isImported){
+                if(new File(imported.getPath()+"/"+i.getName()).exists()){
+                    File tmp = new File(imported.getPath()+"/"+i.getName());
+                    Files.move(Paths.get(tmp.getPath()), Paths.get(tmp.getPath()+".old."+ new Date().getTime()));
+                }
+                Files.move(Paths.get(i.getPath()),Paths.get( imported.getPath()+"/"+i.getName()));
+            }
         }
 
+        writeFirma(mainFirma, baza);
         return true;
     }
 
@@ -402,10 +415,11 @@ public class Main {
                             "Jeśli import się powiedzie, plik zostanie przeniesiony do katalogu \"imported\"\n\nEnter aby kontynuować");
                     importFolders(new File("./import"),new File("./imported"));
                     sc.nextLine();
-                    System.out.println("Rozpoczynam import...");
-                    importKierowcow(mainFirma);
-
-
+                    cls();
+                    System.out.println("Rozpoczynam import...\n");
+                    importKierowcow(mainFirma, baza);
+                    System.out.println("\nUkończono proces importowania\n" +
+                            "Naciśnij Enter aby kontynuować");
                     sc.nextLine();
                     break;
                 }
