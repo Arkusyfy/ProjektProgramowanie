@@ -166,11 +166,16 @@ public class Main {
                 }
                 System.out.println("Błąd w linijce nr "+counter+": "+line);
             }
+
+            reader.close();
+            f.close();
+
             if(isImported){
                 if(new File(imported.getPath()+"/"+i.getName()).exists()){
                     File tmp = new File(imported.getPath()+"/"+i.getName());
                     Files.move(Paths.get(tmp.getPath()), Paths.get(tmp.getPath()+".old."+ new Date().getTime()));
                 }
+
                 Files.move(Paths.get(i.getPath()),Paths.get( imported.getPath()+"/"+i.getName()));
             }
         }

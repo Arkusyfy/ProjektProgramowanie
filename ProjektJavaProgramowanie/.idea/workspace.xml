@@ -7,10 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f47a03f-2e38-44df-8275-616c4db46dc4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/baza" beforeDir="false" afterPath="$PROJECT_DIR$/baza" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/import/kierowcy.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/ProjektJavaProgramowanie_jar/baza" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="399" column="38" selection-start-line="399" selection-start-column="38" selection-end-line="399" selection-end-column="38" />
+            <state relative-caret-position="450">
+              <caret line="169" column="27" selection-start-line="169" selection-start-column="27" selection-end-line="169" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -154,10 +150,10 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/arqsf/IdeaProjects/ProjektJavaProgramowanie/src/com/company/firma.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548019071083" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548021897589" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -216,12 +212,12 @@
       <workItem from="1547980815669" duration="8709000" />
       <workItem from="1548000975675" duration="1925000" />
       <workItem from="1548008733329" duration="98000" />
-      <workItem from="1548016701111" duration="2326000" />
+      <workItem from="1548016701111" duration="4520000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47468000" />
+    <option name="totallyTimeSpent" value="49662000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -234,7 +230,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1017" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17571884" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -284,8 +279,8 @@
     <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.base/java/io/ObjectInputStream.java" />
     <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="399" column="38" selection-start-line="399" selection-start-column="38" selection-end-line="399" selection-end-column="38" />
+        <state relative-caret-position="450">
+          <caret line="169" column="27" selection-start-line="169" selection-start-column="27" selection-end-line="169" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
