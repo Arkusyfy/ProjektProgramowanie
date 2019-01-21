@@ -11,76 +11,107 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args)
-            throws Exception {
+    public static void main(String[] args) {
+        try {
+            RandomAccessFile baza;
+            File plikBazy = new File("./baza");
+            File toImport = new File("./import");
+            File imported = new File("./imported");
 
-        RandomAccessFile baza;
-        File plikBazy = new File("./baza");
-        File toImport = new File("./import");
-        File imported = new File("./imported");
+            importFolders(toImport, imported);
 
-        importFolders(toImport, imported);
+            if (!plikBazy.exists()) {
+                baza = initBaza(plikBazy);
+            } else {
+                baza = new RandomAccessFile(plikBazy.getPath(), "rw");
+            }
+            firma mainFirma = readFirma(baza);
 
-        if (!plikBazy.exists()) {
-            baza = initBaza(plikBazy);
-        } else {
-            baza = new RandomAccessFile(plikBazy.getPath(), "rw");
+
+            menu(mainFirma, baza);
+
+
+            baza.close();
+
+        } catch (IOException e) {
+            System.out.println("Błąd dostepu do pliku bazy");
+            System.exit(-1);
         }
-        firma mainFirma = readFirma(baza);
-
-
-        menu(mainFirma, baza);
-
-
-        baza.close();
 
 
     }
 
-    private static RandomAccessFile initBaza(File plikBazy)
-            throws Exception {
-        plikBazy.createNewFile();
+    private static RandomAccessFile initBaza(File plikBazy) {
+        try {
 
-        RandomAccessFile baza = new RandomAccessFile(plikBazy.getPath(), "rw");
-        firma tempFirma = new firma();
-        return writeFirma(tempFirma, baza);
+            plikBazy.createNewFile();
 
-
-    }
-
-    private static firma readFirma(RandomAccessFile baza)
-            throws IOException, ClassNotFoundException {
-        baza.seek(0);
-        int firmaOffset = baza.readInt();
-        byte[] firmaBytes = new byte[firmaOffset];
-        for (int i = 0; i < firmaBytes.length; i++) {
-            firmaBytes[i] = baza.readByte();
+            RandomAccessFile baza = new RandomAccessFile(plikBazy.getPath(), "rw");
+            firma tempFirma = new firma();
+            return writeFirma(tempFirma, baza);
+        } catch (IOException e) {
+            System.out.println("Błąd dostępu do pliku");
+            System.exit(-1);
+            return initBaza(plikBazy);
         }
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(firmaBytes));
-        firma tempFirma = (firma) in.readObject();
-        in.close();
-        return tempFirma;
 
     }
 
-    private static RandomAccessFile writeFirma(firma tempFirma, RandomAccessFile baza)
-            throws Exception {
-        baza.seek(0);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bos);
-        out.writeObject(tempFirma);
-        byte[] bytes = bos.toByteArray();
-        baza.writeInt(bytes.length);
-        baza.write(bytes);
-        out.close();
-        bos.close();
-        return baza;
+    private static firma readFirma(RandomAccessFile baza) {
+        try {
+
+            baza.seek(0);
+            int firmaOffset = baza.readInt();
+            byte[] firmaBytes = new byte[firmaOffset];
+            for (int i = 0; i < firmaBytes.length; i++) {
+                firmaBytes[i] = baza.readByte();
+            }
+            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(firmaBytes));
+            firma tempFirma = (firma) in.readObject();
+            in.close();
+            return tempFirma;
+        } catch (IOException e) {
+            System.out.println("Błąd przy czytaniu z pliku" +
+                    "Używam pustej firmy" +
+                    "Aby nie stracić poprzednich danych, zamknij program i spróbuj ponownie");
+
+            return new firma();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Błąd przy wczytywaniu klasy firmy z pliku" +
+                    "Używam pustej firmy" +
+                    "Aby nie stracić poprzednich danych, zamknij program i spróbuj ponownie");
+            return new firma();
+        }
+
     }
+
+    private static RandomAccessFile writeFirma(firma tempFirma, RandomAccessFile baza) {
+        RandomAccessFile baza1 = baza;
+        try {
+
+            baza1.seek(0);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bos);
+            out.writeObject(tempFirma);
+            byte[] bytes = bos.toByteArray();
+            baza1.writeInt(bytes.length);
+            baza1.write(bytes);
+            out.close();
+            bos.close();
+            return baza1;
+        } catch (IOException e) {
+            System.out.println("Błąd przy zapisywaniu pliku bazy");
+            return baza;
+        }
+    }
+
 
     private static void cls() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        System.out.println(new String(new char[25]).replace("\0", "\r\n"));
     }
+
+    ;
+
 
     private static double getDouble() {
         Scanner tempsc = new Scanner(System.in);
@@ -122,18 +153,18 @@ public class Main {
             return true;
     }
 
-    private static void importFolders(File toImport, File imported){
+    private static void importFolders(File toImport, File imported) {
 
-        if (!toImport.exists()){
+        if (!toImport.exists()) {
             toImport.mkdir();
         }
-        if(!imported.exists()){
+        if (!imported.exists()) {
             imported.mkdir();
         }
     }
 
-    private static boolean importKierowcow(firma mainFirma, RandomAccessFile baza)
-    throws Exception{
+    private static boolean importKierowcow(firma mainFirma, RandomAccessFile baza) {
+
         final File toImport = new File("./import");
         final File imported = new File("./imported");
 
@@ -141,43 +172,49 @@ public class Main {
 
         ArrayList<File> files = new ArrayList<File>(Arrays.asList(toImport.listFiles()));
 
-        if(files.isEmpty()){
+        if (files.isEmpty()) {
             System.out.println("Brak plików do importu");
             return false;
         }
         ArrayList<kierowca> importedKierowcy = new ArrayList<kierowca>();
-        for (File i:files) {
-            boolean isImported=false;
-            FileReader f = new FileReader(i.getPath());
-            BufferedReader reader = new BufferedReader(f);
-            String line;
-            int counter=0;
-            while((line = reader.readLine())!=null){
-                counter++;
-                if(line.contains(";")){
-                    ArrayList<String> lineSplit = new ArrayList<String>(Arrays.asList(line.split(";")));
-                    if(lineSplit.size()==2){
-                        if(mainFirma.dodajKierowce(lineSplit.get(0), lineSplit.get(1))){
-                            System.out.println("Poyślnie dodano kierowce: "+lineSplit.get(0)+" "+lineSplit.get(1));
-                            isImported=true;
+        try {
+            for (File i : files) {
+                boolean isImported = false;
+                FileReader f = new FileReader(i.getPath());
+                BufferedReader reader = new BufferedReader(f);
+                String line;
+                int counter = 0;
+                while ((line = reader.readLine()) != null) {
+                    counter++;
+                    if (line.contains(";")) {
+                        ArrayList<String> lineSplit = new ArrayList<String>(Arrays.asList(line.split("\\s*;\\s*")));
+                        if (lineSplit.size() == 2) {
+                            if (mainFirma.dodajKierowce(lineSplit.get(0), lineSplit.get(1))) {
+                                System.out.println("Poyślnie dodano kierowce: " + lineSplit.get(0) + " " + lineSplit.get(1));
+                                isImported = true;
+                            }
+                            continue;
                         }
-                        continue;
                     }
-                }
-                System.out.println("Błąd w linijce nr "+counter+": "+line);
-            }
-
-            reader.close();
-            f.close();
-
-            if(isImported){
-                if(new File(imported.getPath()+"/"+i.getName()).exists()){
-                    File tmp = new File(imported.getPath()+"/"+i.getName());
-                    Files.move(Paths.get(tmp.getPath()), Paths.get(tmp.getPath()+".old."+ new Date().getTime()));
+                    System.out.println("Błąd w linijce nr " + counter + ": " + line);
                 }
 
-                Files.move(Paths.get(i.getPath()),Paths.get( imported.getPath()+"/"+i.getName()));
+                reader.close();
+                f.close();
+
+                if (isImported) {
+                    if (new File(imported.getPath() + "/" + i.getName()).exists()) {
+                        File tmp = new File(imported.getPath() + "/" + i.getName());
+                        Files.move(Paths.get(tmp.getPath()), Paths.get(tmp.getPath() + ".old." + new Date().getTime()));
+                    }
+
+                    Files.move(Paths.get(i.getPath()), Paths.get(imported.getPath() + "/" + i.getName()));
+                }
             }
+
+        } catch (IOException e) {
+            System.out.println("Błąd dostępu do pliku");
+            return false;
         }
 
         writeFirma(mainFirma, baza);
@@ -185,7 +222,7 @@ public class Main {
     }
 
 
-    private static void menu(firma mainFirma, RandomAccessFile baza) throws Exception {
+    private static void menu(firma mainFirma, RandomAccessFile baza) {
         String selector;
         do {
             cls();
@@ -225,7 +262,11 @@ public class Main {
                 case "0": {
                     cls();
                     System.out.println("Zamykanie programu...");
-                    Thread.sleep(1000);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+
+                    }
                     break;
                 }
                 case "1": {
@@ -337,38 +378,38 @@ public class Main {
                     System.out.println("Podaj id pojazdu do któego chcesz dopisać kierowce");
                     int pojazdID = getInt();
 
-                    if (mainFirma.kierowcaDoPojazdu(kieroID,pojazdID)){
+                    if (mainFirma.kierowcaDoPojazdu(kieroID, pojazdID)) {
                         System.out.println("Pomyślnie przypisano kierowce do pojazdu");
-                        baza = writeFirma(mainFirma,baza);
+                        baza = writeFirma(mainFirma, baza);
                     }
                     sc.nextLine();
                     break;
                 }
-                case "10":{
+                case "10": {
                     cls();
                     System.out.println(mainFirma.listaPojazdow(false));
                     System.out.println("Podaj id pojazdu, który wyjechał");
                     int id = getInt();
-                    if(mainFirma.wyjazdPojazdu(id)){
+                    if (mainFirma.wyjazdPojazdu(id)) {
                         System.out.println("Pomyślnie odnotowano wyjazd pojazdu");
                         baza = writeFirma(mainFirma, baza);
                     }
                     sc.nextLine();
                     break;
                 }
-                case "11":{
+                case "11": {
                     cls();
                     System.out.println(mainFirma.listaPojazdow(false));
                     System.out.println("Podaj id pojazdu, który przyjechał");
                     int id = getInt();
-                    if(mainFirma.przyjazdPojazdu(id)){
+                    if (mainFirma.przyjazdPojazdu(id)) {
                         System.out.println("Pomyślnie odnotowano przyjazd pojazdu");
                         baza = writeFirma(mainFirma, baza);
                     }
                     sc.nextLine();
                     break;
                 }
-                case "12":{
+                case "12": {
                     cls();
                     System.out.println("Podaj dane kierowcy, któego chcesz wyszukać");
                     String kierowcaMatch = sc.nextLine();
@@ -376,55 +417,57 @@ public class Main {
                     sc.nextLine();
                     break;
                 }
-                case "13":{
+                case "13": {
                     cls();
                     System.out.println("Podaj ładowność");
                     double ladownosc = getDouble();
                     System.out.println("Podaj pojemność");
                     double pojemnosc = getDouble();
 
-                    System.out.println('\n'+mainFirma.wyszukajPojazd(ladownosc, pojemnosc));
+                    System.out.println('\n' + mainFirma.wyszukajPojazd(ladownosc, pojemnosc));
 
                     sc.nextLine();
                     break;
                 }
-                case "14":{
+                case "14": {
                     cls();
                     String get = mainFirma.listWTrasie();
-                    if(get.equals(""))
+                    if (get.equals(""))
                         System.out.println("Brak pojazdów w trasie");
                     else
-                        System.out.println("Pojazdy w trasie:\n"+get);
+                        System.out.println("Pojazdy w trasie:\n" + get);
 
                     sc.nextLine();
                     break;
                 }
-                case "15":{
+                case "15": {
                     cls();
                     String get = mainFirma.sortujPojazdyWgKursow();
-                    if(get.equals(""))
+                    if (get.equals(""))
                         System.out.println("Brak pojazdów");
                     else
-                        System.out.println("Pojazdy posortowane wg ilości kusrów (malejąco):\n"+get);
+                        System.out.println("Pojazdy posortowane wg ilości kusrów (malejąco):\n" + get);
 
                     sc.nextLine();
                     break;
                 }
-                case "16":{
+                case "16": {
                     cls();
                     System.out.println("Umieść plik z kierowcami w folderze \"import\", stworzonym w katalogu, w którym wywołany został program" +
-                                    "\nFormat pliku wygląda następująco:\n\n" +
+                            "\nFormat pliku wygląda następująco:\n\n" +
                             "imię1;nazwisko1\n" +
                             "imię2;nazwisko2\n" +
                             "imie3;nazwisko3\n\n" +
                             "Jeśli import się powiedzie, plik zostanie przeniesiony do katalogu \"imported\"\n\nEnter aby kontynuować");
-                    importFolders(new File("./import"),new File("./imported"));
+                    importFolders(new File("./import"), new File("./imported"));
                     sc.nextLine();
                     cls();
                     System.out.println("Rozpoczynam import...\n");
-                    importKierowcow(mainFirma, baza);
-                    System.out.println("\nUkończono proces importowania\n" +
-                            "Naciśnij Enter aby kontynuować");
+                    if (importKierowcow(mainFirma, baza))
+                        System.out.println("\nUkończono proces importowania\n" +
+                                "Naciśnij Enter aby kontynuować");
+                    else
+                        System.out.println("Kierowcy nie zostali zaimporotwani");
                     sc.nextLine();
                     break;
                 }
