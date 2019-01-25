@@ -243,7 +243,7 @@ public class Main {
             System.out.println("13 Wyszukaj dostępny pojazd o większej ładowności i pojemności od podanych");
             System.out.println("14 Wypisz listę pojazdów w trasie");
             System.out.println("15 Posortuj pojazdy wg liczby odbytych kursów");
-            System.out.println("16 Importuj kierowców z pliku xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+            System.out.println("16 Importuj kierowców z pliku");
             System.out.println();
             System.out.println("0 Wyjście");
             System.out.println();
